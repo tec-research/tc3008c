@@ -1,4 +1,4 @@
-# Laboratorios de seguridad de redes con Mininet
+# Laboratorios de Cybersecurity con Mininet
 
 Código complementario para cuatro semanas de laboratorio en Ubuntu 26.04 LTS
 y Mininet 2.3.0.
