@@ -6,8 +6,8 @@ if ! grep -q 'VERSION_ID="26.04"' /etc/os-release; then
   exit 1
 fi
 
-sudo add-apt-repository -y universe
-sudo apt update
+#sudo add-apt-repository -y universe
+#sudo apt update
 sudo env DEBIAN_FRONTEND=noninteractive apt install -y mininet openvswitch-switch \
   openvswitch-testcontroller iproute2 iperf3 tcpdump tshark \
   wireshark hping3 dsniff nftables suricata jq curl git python3 python3-venv \
