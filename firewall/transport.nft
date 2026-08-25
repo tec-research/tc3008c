@@ -1,0 +1,8 @@
+table inet labfw {
+  chain forward {
+    type filter hook forward priority 0; policy accept;
+    ct state established,related accept
+    iifname "r1-ext" oifname "r1-dmz" tcp dport 8080 tcp flags & (fin|syn|rst|ack) == syn limit rate 20/second burst 40 packets accept
+    iifname "r1-ext" oifname "r1-dmz" tcp dport 8080 tcp flags & (fin|syn|rst|ack) == syn counter log prefix "LAB_SYN_DROP " drop
+  }
+}
