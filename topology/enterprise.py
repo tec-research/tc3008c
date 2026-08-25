@@ -21,8 +21,12 @@ def build_network():
                   build=False, autoSetMacs=True)
     net.addController("c0")
     r1 = net.addHost("r1", cls=LinuxRouter, ip=None)
-    switches = {name: net.addSwitch(name)
-                for name in ("sExt", "sUsr", "sDmz", "sAdm")}
+    switches = {
+        "sExt": net.addSwitch("s1"),  # External
+        "sUsr": net.addSwitch("s2"),  # Users
+        "sDmz": net.addSwitch("s3"),  # DMZ
+        "sAdm": net.addSwitch("s4"),  # Administration
+    }
 
     specs = [
         ("attacker", "10.0.0.10/24", "10.0.0.1", "sExt", 20, "8ms"),
@@ -34,6 +38,13 @@ def build_network():
     ]
     for name, ip, gateway, switch, bw, delay in specs:
         host = net.addHost(name, ip=ip, defaultRoute=f"via {gateway}")
+        net.addLink(
+          host,
+          switches[switch],
+          bw=bw,
+          delay=delay,
+          use_tbf=True,
+       )
         net.addLink(host, switches[switch], bw=bw, delay=delay)
 
     router_links = [
